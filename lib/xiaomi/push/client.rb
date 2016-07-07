@@ -7,7 +7,7 @@ module Xiaomi
       include Const
 
       attr_reader :device, :secret, :header
-      def initialize(secret)
+      def initialize(secret, sandbox = true)
         @device = self.class.name.split('::')[-1].upcase
         @secret = secret
 
@@ -19,7 +19,7 @@ module Xiaomi
           'Authorization' => "key=#{@secret}"
         }
 
-        use_production!
+        sandbox ? use_sandbox! : use_production!
       end
 
       def message
